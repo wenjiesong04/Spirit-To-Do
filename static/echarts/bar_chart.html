@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bar chart</title>
+    <script type="text/javascript" src="https://assets.pyecharts.org/assets/echarts.min.js"></script>
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        #main {
+            width: 365vh;
+            height: 100vh;
+            margin: 0 auto;
+            max-width: 1200px;
+        }
+    </style>
+</head>
+<body>
+    <div id="main"></div>
+    <script>
+        var myChart = echarts.init(document.getElementById('main'));
+
+        // 异步请求数据
+        fetch('/Spirit/TodoPage/api/bar_chart_data')
+            .then(res => res.json())
+            .then(data => {
+                var option = {
+                    title: {
+                        top: '2%',
+                        bottom: '5%',
+                        text: 'Task Count Time Distribution',
+                        left: 'center',
+                        textStyle: { color: '#e0d7f4', fontSize: 18 }
+                    },
+                    backgroundColor: '#222',
+                    tooltip: {},
+                    xAxis: {
+                        type: 'category',
+                        data: data.labels,
+                        axisLabel: { color: '#999' },
+                        axisLine: { lineStyle: { color: '#444' } }
+                    },
+                    yAxis: {
+                        type: 'value',
+                        axisLabel: { color: '#999' },
+                        splitLine: { lineStyle: { color: '#333' } }
+                    },
+                    grid: {
+                        left: '6%',
+                        right: '6%',
+                        bottom: '10%',
+                        top: '15%'
+                    },
+                    series: [{
+                        name: 'Number of Tasks:',
+                        type: 'bar',
+                        data: data.data,
+                        barWidth: '36%', // 柱宽
+                        barCategoryGap: '55%', // 柱子间距，百分比越大，间隔越大
+                        itemStyle: {
+                            color: '#e06666',
+                            borderRadius: [6, 6, 0, 0]
+                        },
+                        emphasis: {
+                            itemStyle: { color: '#ffd966' }
+                        }
+                    }]
+                };
+                myChart.setOption(option);
+            });
+
+        // 响应式自适应
+        window.addEventListener('resize', function() {
+            myChart.resize();
+        });
+    </script>
+</body>
+</html>

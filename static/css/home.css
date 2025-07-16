@@ -1,0 +1,335 @@
+/* ====== Layout ====== */
+.blocks {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 2vh;
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 2vw 0;
+}
+.left_blocks {
+    flex: 2 1 0;
+    min-width: 0;
+    max-width: 700px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+.right_block {
+    flex: 1 1 0;
+    min-width: 320px;
+    max-width: 420px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    color: #e0d7f4;
+}
+
+/* ====== Component: Header ====== */
+.homepage_content_heading_text {
+    color: white;
+    margin-top: 5vh;
+    display: flex;
+    flex-direction: column;
+}
+#greeting_user {
+    color: #047e9b;
+    font-family: "Segoe UI", "Helvetica Neue", "Arial", sans-serif;
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+}
+#date {
+    font-size: 13px;
+    letter-spacing: 4px;
+    word-spacing: 8px;
+    font-family: "Arial", sans-serif;
+    margin-top: 5vh;
+    margin-bottom: 1vh;
+}
+
+/* ====== Component: Status Bar ====== */
+.status_bar {
+    padding-right: 3vh;
+    display: inline-flex;
+    flex-wrap: wrap;
+    margin-top: 2vh;
+    border: 1px solid #2b2d30;
+    border-radius: 20px;
+    background-color: rgba(0, 0, 0, 0.17);
+    width: fit-content;
+    white-space: nowrap;
+    min-width: 50%;
+    gap: 7vh
+}
+.time_option {
+    color: #e0d7f4;
+}
+.dropdown_button {
+    color: #e0d7f4;
+    padding: 1vh 2vh 1vh 3vh;
+    background-color: #212121;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+    border: none;
+    border-right: 1px solid #2b2d30;
+}
+.dropdown_button:hover,
+.dropdown_button:active,
+.dropdown_button:focus {
+    background-color: #047e9b;
+    color: white;
+}
+.dropdown_list {
+    background-color: #212121;
+}
+
+/* ====== Component: Todo Blocks ====== */
+.block_todo {
+    width: 100%;
+    min-width: 0;
+    min-height: 240px;
+    border: 1px solid #2b2d30;
+    border-radius: 10px;
+    background-color: rgba(0,0,0,0.17);
+    padding: 1vh 2vh 2vh;
+    box-sizing: border-box;
+    transition: all 0.3s ease-in-out;
+    margin: 0 0 28px 0;
+}
+.block_todo:hover {
+    box-shadow: 0 0 15px #047e9b;
+    transform: translateY(-3px);
+}
+.block_todo hr {
+    margin-top: 0;
+}
+.block_todo svg {
+    color: #e0d7f4;
+}
+.todo_item {
+    padding: 1vh 2vh;
+    margin: 6px 0;
+    border: 1px solid #2b2d30;
+    border-radius: 6px;
+    background-color: rgba(255, 255, 255, 0.05);
+    color: #e0d7f4;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+.todo_item:hover {
+    background-color: rgba(4, 126, 155, 0.2);
+}
+.todo_option {
+    margin: 1vh 5vh 0 2vh;
+    padding-left: 0;
+    list-style-type: none;
+}
+.todo_option li {
+    display: inline-block;
+}
+.todo_option_button {
+    font-size: 13px;
+    border: none;
+    color: white;
+    background-color: rgba(0, 0, 0, 0);
+    letter-spacing: 2px;
+    word-spacing: 4px;
+    margin: 1vh 2vh;
+    border-radius: 20px;
+}
+.todo_option_button:hover {
+    color: #047e9b;
+    border-bottom: 1px solid #047e9b;
+}
+.todo_option_button.active {
+    background-color: rgba(4, 126, 155, 0.4);
+    color: white;
+}
+.todo_count {
+    color: #e0d7f4;
+    font-size: 14px;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    cursor: default;
+}
+.todo_options_title {
+    color: #e0d7f4;
+    margin-left: 1%;
+}
+.badge {
+    margin-left: 1vh;
+}
+.close_block {
+    color: #e0d7f4;
+    margin: 10px;
+}
+.close_block:focus {
+    box-shadow: none;
+}
+.close_block:focus-visible {
+    box-shadow: none;
+}
+.todo_items_list {
+    overflow: scroll;
+    max-height: 30vh;
+}
+.todo_items_content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    max-height: 2vh;
+}
+.todo_item_layout {
+    min-width: 8vh;
+    max-width: 15vh;
+}
+#todo_item_layout {
+    display: flex;
+    flex-direction: row;
+    min-width: 15vh;
+    justify-content: center;
+    align-items: center;
+}
+#todo_items_button {
+    margin-left: 0.01vh; !important;
+}
+
+/* ====== Utility Classes ====== */
+.block_peoples_content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.block_peoples_content_left {
+    display: flex;
+    direction: ltr;
+    align-items: center;
+}
+
+.block_icon {
+    width: 3vh;
+    height: 3vh;
+    border-radius: 50%;
+    object-fit: cover;
+}
+#block_peoples_new {
+    font-size: 13px;
+}
+.accordion {
+    overflow: scroll;
+    max-height: 30vh;
+}
+.drop_down_button {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 1vh 2vh;
+    color: #e0d7f4;
+    background-color: rgba(255, 255, 255, 0.05);
+    border: none;
+    font: bold 14px "Segoe UI", "Helvetica Neue", "Arial", sans-serif;
+}
+.revoke_access {
+    color: #047e9b;
+    border: 1px solid #047e9b;
+}
+.revoke_access:hover {
+    color: #e0d7f4;
+    background-color: rgba(4, 126, 155, 0.4);
+    border: 1px solid rgba(4, 126, 155, 0.4);
+}
+.group_list {
+    background-color: #323539;
+}
+.button_gear {
+    color: #e0d7f4;
+    background-color: rgba(4, 126, 155, 0);
+    border: none;
+    border-radius: 5px;
+}
+.button_gear:hover,
+.button_gear:active {
+    color: white;
+    background-color: rgba(4, 126, 155, 0.3);
+}
+
+/* 右模块 */
+.projection_dashboard {
+    color: #e0d7f4;
+    background-color: #212121;
+    border: 1px solid #e0d7f4;
+    border-radius: 15px;
+    padding: 0.3vh 1vh;
+    cursor: pointer;
+}
+.todo_brief {
+    min-height: 10vh;
+    padding: 1vh;
+    color: white !important;
+    border: 1px solid #6c757d !important;
+    border-radius: 15px;
+}
+.todo_content {
+    min-height: 20vh;
+    padding: 1vh;
+    color: white !important;
+    border: 1px solid #6c757d !important;
+    border-radius: 15px;
+}
+.todo_others {
+    color: #e0d7f4;
+}
+
+/* 添加模块 */
+#add_blocks {
+    color: #e0d7f4;
+}
+#add_blocks:hover {
+    color: white;
+}
+
+
+/* ====== Media Queries ====== */
+@media (max-width: 768px) {
+    .homepage_content_heading_text {
+        padding-left: 5%;
+        text-align: center;
+        font-size: 18px;
+    }
+    #greeting_user, #date {
+        margin-left: 5%;
+        text-align: center;
+    }
+    .block_todo {
+        min-width: 350px;
+        margin: 5vh 5%;
+        width: 95%;
+    }
+    .status_bar {
+        width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .todo_count {
+        display: block;
+        margin-left: 0;
+    }
+    .blocks {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 20px;
+        padding: 0 2vw;
+    }
+    .left_blocks,
+    .right_block {
+        flex: unset;
+        min-width: 0;
+        max-width: 100%;
+    }
+}
+

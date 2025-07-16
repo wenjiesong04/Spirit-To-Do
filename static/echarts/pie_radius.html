@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Task Completion Pie Chart - Radius</title>
+    <script src="https://assets.pyecharts.org/assets/echarts.min.js"></script>
+    <style>
+        body {
+            background-color: #2b2d30;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0 3.5vh;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 3.6vh auto;
+            text-align: center;
+            background-color: #1e1e1e;
+            border-radius: 10px;
+            border: 1px solid rgba(0, 0, 0, .125);
+            padding: 0 3vh;
+        }
+        .container:hover {
+            box-shadow: 0 0 15px #e0d7f4;
+            transform: translateY(-3px);
+            cursor: default;
+        }
+
+        #radiusChart {
+            width: 100%;
+            height: 78vh;
+            background: #1e1e1e;
+            border-radius: 10px;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1vh;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h4 style="color: #e3d7f4; padding-bottom: 2.2vh; border-bottom: 1px solid rgba(43,44,48,9.9)" >Task Completion Pie Chart - Radius</h4>
+    <!-- Pie Chart -->
+    <div id="radiusChart"></div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        fetch('/Spirit/TodoPage/api/pie_radius_data')
+            .then(response => response.json())
+            .then(data => {
+                const chartDom = document.getElementById('radiusChart');
+                const myChart = echarts.init(chartDom);
+                const option = {
+                    backgroundColor: '#1f1f1f',
+                    tooltip: {
+                        trigger: 'item',
+                        backgroundColor: '#333',
+                        borderColor: '#aaa',
+                        borderWidth: 1,
+                        textStyle: {
+                            color: '#fff',
+                            fontSize: 14
+                        },
+                        formatter: params =>
+                            `${params.name}: ${params.value} tasks (${params.percent}%)`
+                    },
+                    legend: {
+                        top: 'center',
+                        right: '5%',
+                        orient: 'vertical',
+                        textStyle: {
+                            color: '#ccc',
+                            fontSize: 14
+                        },
+                        itemWidth: 20,
+                        itemHeight: 14,
+                        itemGap: 12
+                    },
+                    series: [
+                        {
+                            name: 'Number of Tasks',
+                            type: 'pie',
+                            radius: ['30%', '65%'],
+                            center: ['40%', '50%'],
+                            roseType: 'radius',
+                            itemStyle: {
+                                borderRadius: 8,
+                                borderColor: '#1f1f1f',
+                                borderWidth: 2
+                            },
+                            label: {
+                                show: true,
+                                color: '#fff',
+                                fontSize: 14
+                            },
+                            labelLine: {
+                                lineStyle: { color: '#aaa' },
+                                smooth: 0.2,
+                                length: 10,
+                                length2: 20
+                            },
+                            emphasis: {
+                                label: {
+                                    show: true,
+                                    fontSize: 18,
+                                    fontWeight: 'bold',
+                                    color: '#fff'
+                                }
+                            },
+                            color: [
+                                '#5470C6',
+                                '#91CC75',
+                                '#FAC858',
+                                '#EE6666',
+                                '#73C0DE',
+                                '#3BA272',
+                                '#FC8452',
+                                '#9A60B4',
+                                '#EA7CCC'
+                            ],
+                            data: data
+                        }
+                    ]
+                };
+                myChart.setOption(option);
+                window.addEventListener('resize', myChart.resize);
+            });
+    });
+</script>
+</body>
+</html>

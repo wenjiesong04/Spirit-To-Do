@@ -1,0 +1,68 @@
+#inbox-box {
+    background-color: #1e1e1e;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    margin-top: 2vh;
+}
+
+#inbox-box h3 {
+    color: #ffffff;
+    font-weight: bold;
+}
+
+#inbox-list {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.inbox-item {
+    background-color: #2c2c2c;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    padding: 12px 16px;
+    transition: background-color 0.2s ease;
+}
+
+.inbox-item:hover {
+    background-color: #353535;
+}
+
+.inbox-item .text-light {
+    font-size: 1rem;
+}
+
+.inbox-item .text-secondary {
+    font-size: 0.85rem;
+}
+
+#inbox-clear-btn,
+#inbox-close-btn {
+    font-size: 0.95rem;
+    padding: 6px 12px;
+}
+
+#inbox-box {
+    max-width: 800px;
+    margin: 4vh auto;
+}
+
+#inbox-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+#inbox-list::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+}
+
+.inbox-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.inbox-header h3 {
+    margin: 0;
+}

@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&display=swap');
+.image-logo {
+    background: black;
+}
+#todo {
+    color: #047e9b;
+}
+.right {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.right_element {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+}
+.right svg {
+    color: #e0d7f4;
+    width: 25px;
+    height: 25px;
+}
+svg:hover {
+    color: white;
+}
+.divider {
+    width: 1px;
+    height: 24px;
+    background-color: #d7ceea;
+    margin: 0 10px;
+}
+.register_login {
+    color: #bcb5ce;
+    font-family: "Bebas Neue", "Anton", "Impact", "Arial Narrow", sans-serif;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+.register_login:hover {
+    color: white;
+}
+
+.login_form {
+    color: white;
+    border-radius: 16px;
+    background-color: #1f2023;
+    padding: 16px;
+}
+.login_title {
+    color: #047e9b;
+    border-bottom: 1px #2b2d30 solid;
+    padding-bottom: 15px;
+}
+.login_input {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 10px;
+}
+.login_btn {
+    width: 80px;
+    height: 40px;
+    border-radius: 10px;
+
+}
+.login_btn:hover {
+    font-size:17px;
+    background-color: #047e9b;
+    border: none;
+}
+.signup {
+    width: 110px;
+    height: 40px;
+    border: none;
+    border-radius: 10px;
+    background-color: #047e9b;
+    margin: 5px;
+}
+.signup:hover {
+    font-size:17px;
+    color: black;
+    background-color: white;
+    border: none;
+}
+.ls_prompt {
+    font-size: 13px;
+}

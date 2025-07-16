@@ -1,0 +1,11 @@
+.search_page_content {
+    min-height: 85vh;
+}
+.no_result {
+    color: black;
+    background-color: white;
+    height: 5vh;
+    align-content: center;
+    text-align: center;
+    border-radius: 10px;
+}

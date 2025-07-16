@@ -1,0 +1,205 @@
+.todo_page_content_base {
+    min-height: 90vh;
+}
+.todo_page_content_heading {
+}
+.heading_nav {
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    background-color: #212121;
+    border-radius: 5px;
+}
+.tab-content hr {
+    color: white; !important;
+    margin: 0.5vh 2vh 1vh 2vh;
+}
+.todo_content_button {
+    color: #e0d7f4;
+    min-width: 15vh;
+    padding: 1vh;
+    display: inline-block;
+    border: none;
+    background-color: #212121;
+}
+.todo_content_button:hover {
+    background-color: rgba(4, 126, 155, 0.3);
+    color: white;
+}
+.todo_content_button.active {
+    background-color: #047e9b;
+    color: white;
+    font-weight: bold;
+}
+.todo_page_content_container {
+    display: flex;
+    justify-content: center;
+}
+#tab-todo-list {
+    min-width: 70%;
+}
+.tab-content {
+    background-color: rgba(0,0,0,0.17);
+    border: none;
+    border-radius: 10px;
+    padding: 1vh;
+}
+.list_item {
+    position: relative;
+    display: block;
+    padding: .5rem 1rem;
+    color: #e0d7f4;
+    text-decoration: none;
+    border: 1px solid rgba(0, 0, 0, .125);
+    border-radius: 10px;
+}
+.todo_list_length {
+    max-height: 80vh;
+    overflow: scroll;
+}
+.list_btn {
+    color: #e0d7f4;
+}
+.list_btn:hover,
+.list_btn:active {
+    color: white;
+    background-color: #047e9b;
+}
+.btn-link {
+    text-decoration: none;
+}
+.todo_items {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    min-width: 10vh;
+}
+.btn-outline-primary {
+    color: #047e9b;
+    border: 1px solid #047e9b;
+}
+.btn-outline-primary:hover,
+.btn-outline-primary:active {
+    color: white;
+    background-color: #047e9b;
+    border: 1px solid #047e9b;
+}
+.dropdown-menu {
+    background-color: rgba(0,0,0,0.6);
+    border-radius: 10px;
+}
+
+
+.checkbox_container {
+    display: inline-flex;
+    align-items: center;
+}
+
+.todo-complete-checkbox {
+    width: 2.9vh;
+    height: 2.9vh;
+    accent-color: #FFC107;
+    border-radius: 50%;
+    margin-right: 1vh;
+    cursor: pointer;
+    transition: box-shadow 0.2s;
+    box-shadow: 0 0 0 0 #ffc10755;
+}
+.todo-complete-checkbox:focus {
+    outline: none;
+    box-shadow: 0 0 0 0.4vh #ffeeba;
+}
+
+/* 已完成状态整行变灰+划线 */
+.list_item.completed,
+.list_item.completed .todo-title {
+    color: #bbb !important;
+    background: #191919;
+    text-decoration: line-through !important;
+    opacity: 0.7;
+}
+.todo-title {
+    font-size: 1.1rem;
+    vertical-align: middle;
+}
+.list_item:not(.completed) .todo-title {
+    color: #e0d7f4;
+    text-decoration: none;
+    opacity: 1;
+}
+
+/* 热点图 */
+#tab-heat-map {
+    min-width: 100%;
+}
+
+/* 仪表盘 */
+.digital_panels {
+    background-color: rgba(33, 33, 33, 0.9);
+    min-height: 45vh;
+    color: #e0d7f4;
+    padding: 2vh 2vh;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, .125);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    transition: transform 0.2s;
+}
+
+.digital_panel {
+    height: 8vh;
+    border: 1px solid #e0d7f4;
+    padding: 1vh;
+    text-align: center;
+    font-size: 1rem;
+}
+.digital_panel .display-6 {
+    font-size: 1.6rem;
+    font-weight: bold;
+    margin-top: 0.2vh;
+}
+.digital_panels:hover {
+    box-shadow: 0 0 15px #e0d7f4;
+    transform: translateY(-3px);
+    cursor: default;
+}
+.filter_button {
+    color: #e0d7f4;
+    background-color: rgba(255, 255, 255, 0.05);
+    border: none;
+    border-radius: 10px;
+}
+.filter_button:hover,
+.filter_button:active {
+    background-color: #047e9b;
+}
+.digital_count:hover {
+    color: white;
+}
+.dashboard-filter-option {
+    color: #e0d7f4;
+    border-radius: 5px;
+}
+.dashboard-filter-option:hover {
+    color: white;
+    background-color: #047e9b;
+}
+
+/* 回收站 */
+.trash_list {
+    border-radius: 15px;
+    color: #e0d7f4;
+    padding: 2vh;
+    min-height: 95vh;
+    min-width: 100vh;
+    margin-bottom: 5vh;
+    background-color: rgba(0,0,0,0.17);
+    border: 1px solid rgba(0, 0, 0, .125);
+}
+.trash_list hr {
+    border-color: white !important;
+    opacity: 0.4;
+    margin: 0.5vh 0 1vh 0;
+}

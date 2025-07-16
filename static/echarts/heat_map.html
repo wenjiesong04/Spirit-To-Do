@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Todo Annual heat map overview</title>
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css" />
+    <script src="/static/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <style>
+        body {
+            color: #047e9b;
+            font-family: Arial, sans-serif;
+            background-color: #2b2d30;
+            padding: 5vh 2vh;
+        }
+        .heatmap-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            grid-gap: 5vh 1vh;
+            margin-top: 3vh;
+        }
+        .heatmap-month-block {
+            background: #1e1e1e;
+            padding: 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .heatmap-month-block:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px #047e9b;
+        }
+        .heatmap-month-title {
+            text-align: center;
+            font-weight: bold;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+        .weekdays {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            text-align: center;
+            margin-bottom: 4px;
+            font-weight: bold;
+            color: #bbb;
+            font-size: 12px;
+        }
+        .heatmap-days-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            grid-gap: 1vh;
+        }
+        .heatmap-day {
+            width: 100%;
+            padding-top: 100%;
+            position: relative;
+            background-color: #2e2e2e;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        .heatmap-day[data-count="0"] { background-color: #2e2e2e; }
+        .heatmap-day[data-count="1"] { background-color: #d0e6f6; }
+        .heatmap-day[data-count="2"] { background-color: #8cc4f4; }
+        .heatmap-day[data-count="3"] { background-color: #4a9ff4; }
+        .heatmap-day[data-count="4"] { background-color: #136ff3; }
+        .heatmap-day[data-count="5"] { background-color: #0f52ba; }
+        .heatmap-day[data-count="6"] { background-color: #0a3a9e; }
+        .heatmap-day[data-count="7"] { background-color: #072d8a; }
+
+        .heatmap-day:hover::after {
+            content: attr(title);
+            position: absolute;
+            bottom: 120%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #333;
+            color: #fff;
+            padding: 4px 8px;
+            border-radius: 4px;
+            white-space: nowrap;
+            font-size: 12px;
+            opacity: 1;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .heatmap-day:hover::before {
+            content: "";
+            position: absolute;
+            bottom: 110%;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 6px;
+            border-style: solid;
+            border-color: transparent transparent #333 transparent;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+    <h2 style="text-align:center;">Todos Heat Map</h2>
+    <h5 style="text-align:center; margin-top: 5vh" id="year-title"></h5>
+    <div class="heatmap-grid">
+        <!-- 1月 -->
+        <div class="heatmap-month-block" data-month="1">
+            <div class="heatmap-month-title">January</div>
+            <div class="weekdays">
+                <div>S</div><div>M</div><div>T</div><div>W</div><div>T</div><div>F</div><div>S</div>
+            </div>
+            <div class="heatmap-days-grid" id="heatmap-month-1"></div>
+        </div>
+        <!-- 2月 -->
+        <div class="heatmap-month-block" data-month="2">
+            <div class="heatmap-month-title">February</div>
+            <div class="weekdays">
+                <div>S</div><div>M</div><div>T</div><div>W</div><div>T</div><div>F</div><div>S</div>
+            </div>
+            <div class="heatmap-days-grid" id="heatmap-month-2"></div>
+        </div>
+        <!-- 3月 -->
+        <div class="heatmap-month-block" data-month="3">
+            <div class="heatmap-month-title">March</div>
+            <div class="weekdays">
+                <div>S</div><div>M</div><div>T</div><div>W</div><div>T</div><div>F</div><div>S</div>
+            </div>
+            <div class="heatmap-days-grid" id="heatmap-month-3"></div>
+        </div>
+        <!-- 4月 -->
+        <div class="heatmap-month-block" data-month="4">
+            <div class="heatmap-month-title">April</div>
+            <div class="weekdays">
+                <div>S</div><div>M</div><div>T</div><div>W</div><div>T</div><div>F</div><div>S</div>
+            </div>
+            <div class="heatmap-days-grid" id="heatmap-month-4"></div>
+        </div>
+        <!-- 5月 -->
+        <div class="heatmap-month-block" data-month="5">
+            <div class="heatmap-month-title">May</div>
+            <div class="weekdays">
+                <div>S</div><div>M</div><div>T</div><div>W</div><div>T</div><div>F</div><div>S</div>
+            </div>
+            <div class="heatmap-days-grid" id="heatmap-month-5"></div>
+        </div>
+        <!-- 6月 -->
+        <div class="heatmap-month-block" data-month="6">
+            <div class="heatmap-month-title">June</div>
+            <div class="weekdays">
+                <div>S</div><div>M</div><div>T</div><div>W</div><div>T</div><div>F</div><div>S</div>
+            </div>
+            <div class="heatmap-days-grid" id="heatmap-month-6"></div>
+        </div>
+        <!-- 7月 -->
+        <div class="heatmap-month-block" data-month="7">
+            <div class="heatmap-month-title">July</div>
+            <div class="weekdays">
+                <div>S</div><div>M</div><div>T</div><div>W</div><div>T</div><div>F</div><div>S</div>
+            </div>
+            <div class="heatmap-days-grid" id="heatmap-month-7"></div>
+        </div>
+        <!-- 8月 -->
+        <div class="heatmap-month-block" data-month="8">
+            <div class="heatmap-month-title">August</div>
+            <div class="weekdays">
+                <div>S</div><div>M</div><div>T</div><div>W</div><div>T</div><div>F</div><div>S</div>
+            </div>
+            <div class="heatmap-days-grid" id="heatmap-month-8"></div>
+        </div>
+        <!-- 9月 -->
+        <div class="heatmap-month-block" data-month="9">
+            <div class="heatmap-month-title">September</div>
+            <div class="weekdays">
+                <div>S</div><div>M</div><div>T</div><div>W</div><div>T</div><div>F</div><div>S</div>
+            </div>
+            <div class="heatmap-days-grid" id="heatmap-month-9"></div>
+        </div>
+        <!-- 10月 -->
+        <div class="heatmap-month-block" data-month="10">
+            <div class="heatmap-month-title">October</div>
+            <div class="weekdays">
+                <div>S</div><div>M</div><div>T</div><div>W</div><div>T</div><div>F</div><div>S</div>
+            </div>
+            <div class="heatmap-days-grid" id="heatmap-month-10"></div>
+        </div>
+        <!-- 11月 -->
+        <div class="heatmap-month-block" data-month="11">
+            <div class="heatmap-month-title">November</div>
+            <div class="weekdays">
+                <div>S</div><div>M</div><div>T</div><div>W</div><div>T</div><div>F</div><div>S</div>
+            </div>
+            <div class="heatmap-days-grid" id="heatmap-month-11"></div>
+        </div>
+        <!-- 12月 -->
+        <div class="heatmap-month-block" data-month="12">
+            <div class="heatmap-month-title">December</div>
+            <div class="weekdays">
+                <div>S</div><div>M</div><div>T</div><div>W</div><div>T</div><div>F</div><div>S</div>
+            </div>
+            <div class="heatmap-days-grid" id="heatmap-month-12"></div>
+        </div>
+    </div>
+
+    <script>
+document.addEventListener("DOMContentLoaded", function () {
+    const currentYear = new Date().getFullYear();
+    document.getElementById('year-title').textContent = `${currentYear}`;
+    fetch(window.location.origin + '/Spirit/TodoPage/api/heatmap_data?year=' + currentYear)
+        .then(response => response.json())
+        .then(data => {
+            const allDays = data.days || data;
+            for (let month = 1; month <= 12; month++) {
+                const daysGrid = document.getElementById(`heatmap-month-${month}`);
+                daysGrid.innerHTML = '';
+                const daysInMonth = new Date(currentYear, month, 0).getDate();
+                const firstDayDate = new Date(currentYear, month - 1, 1);
+                const firstWeekday = firstDayDate.getDay();
+                for (let i = 0; i < firstWeekday; i++) {
+                    const emptyDiv = document.createElement('div');
+                    emptyDiv.classList.add('heatmap-day');
+                    emptyDiv.setAttribute('data-count', '0');
+                    emptyDiv.style.visibility = 'hidden';
+                    daysGrid.appendChild(emptyDiv);
+                }
+                for (let day = 1; day <= daysInMonth; day++) {
+                    const dateStr = `${currentYear}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+                    const count = allDays[dateStr] || 0;
+                    const dayDiv = document.createElement('div');
+                    dayDiv.classList.add('heatmap-day');
+                    dayDiv.setAttribute('data-count', Math.min(count, 7));
+                    dayDiv.setAttribute('title', `${dateStr}: ${count} todos`);
+                    daysGrid.appendChild(dayDiv);
+                }
+            }
+        });
+
+    document.querySelectorAll('.heatmap-month-block').forEach(block => {
+        block.addEventListener('click', function () {
+            const month = this.getAttribute('data-month');
+            document.getElementById('modalMonthTitle').textContent = `Details for Month ${month}`;
+            fetch(window.location.origin + `/Spirit/TodoPage/api/heatmap_data?year=${currentYear}&month=${month}`)
+                .then(response => response.json())
+                .then(data => {
+                    const summary = data.summary;
+                    const days = data.days;
+                    const modalBody = document.querySelector('#monthDetailModal .modal-body');
+                    if (Object.keys(days).length === 0) {
+                        modalBody.innerHTML = '<p class="text-muted">There are no mission records for this month.</p>';
+                    } else {
+                        modalBody.innerHTML = `
+                            <p>Total Todos for the Month: <strong style="color: #047e9b"> ${summary.total_todos} </strong></p>
+                            <p>Day with the Most Todos: <strong style="color: #047e9b"> ${summary.max_day || 'N/A'} </strong>, with <strong style="color: #047e9b">${summary.max_day_count}</strong> Todos.</p>
+                            <p>Daily distribution:</p>
+                            <ul>
+                                ${Object.entries(days).map(([date, count]) => `<li style="color: #047e9b">${date}: ${count} Todos</li>`).join('')}
+                            </ul>
+                        `;
+                    }
+                    const modal = new bootstrap.Modal(document.getElementById('monthDetailModal'));
+                    modal.show();
+                });
+        });
+    });
+});
+    </script>
+
+    <div class="modal fade" id="monthDetailModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content" style="background-color: #2b2d30; color: white;">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalMonthTitle" style="color: #e0d7f4"><b>Month Details</b></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body ">
+                    <!-- Month detailed view here -->
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,48 @@
+alembic @ file:///home/conda/feedstock_root/build_artifacts/alembic_1743207807124/work
+aniso8601==10.0.1
+APScheduler==3.11.0
+blinker @ file:///private/var/folders/k1/30mswbxs7r1g6zwn8y4fyt500000gp/T/abs_11lor_igbs/croot/blinker_1737449046432/work
+cffi @ file:///Users/runner/miniforge3/conda-bld/cffi_1725560574711/work
+click @ file:///private/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_d2rtg2ejqc/croot/click_1744271604580/work
+cryptography @ file:///Users/runner/miniforge3/conda-bld/cryptography-split_1740893596609/work
+dnspython @ file:///home/conda/feedstock_root/build_artifacts/dnspython_1733256735222/work
+email_validator @ file:///home/conda/feedstock_root/build_artifacts/email-validator-meta_1733300719943/work
+Flask @ file:///private/var/folders/k1/30mswbxs7r1g6zwn8y4fyt500000gp/T/abs_fabivvom5o/croot/flask_1737454311468/work
+Flask-APScheduler==1.13.1
+Flask-HTTPAuth==4.8.0
+Flask-Mail @ file:///home/conda/feedstock_root/build_artifacts/flask-mail_1736733497134/work
+Flask-Migrate @ file:///home/conda/feedstock_root/build_artifacts/flask-migrate_1736546704161/work
+Flask-RESTful==0.3.10
+Flask-SQLAlchemy @ file:///home/conda/feedstock_root/build_artifacts/bld/rattler-build_flask-sqlalchemy_1733868589/work
+Flask-WTF @ file:///home/conda/feedstock_root/build_artifacts/flask-wtf_1733920435077/work
+greenlet @ file:///private/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_3fdrsxa1og/croot/greenlet_1733860082149/work
+idna @ file:///home/conda/feedstock_root/build_artifacts/idna_1733211830134/work
+importlib_metadata @ file:///home/conda/feedstock_root/build_artifacts/importlib-metadata_1737420181517/work
+itsdangerous @ file:///private/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_00jdi1gu23/croot/itsdangerous_1716533346702/work
+Jinja2 @ file:///private/var/folders/k1/30mswbxs7r1g6zwn8y4fyt500000gp/T/abs_2cnn4kenrm/croot/jinja2_1741710859444/work
+Mako @ file:///home/conda/feedstock_root/build_artifacts/mako_1744317760971/work
+MarkupSafe @ file:///private/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_1f_uj4vxik/croot/markupsafe_1738584045311/work
+prettytable==3.16.0
+pycparser @ file:///home/conda/feedstock_root/build_artifacts/bld/rattler-build_pycparser_1733195786/work
+pyecharts==2.0.8
+PyMySQL @ file:///home/conda/feedstock_root/build_artifacts/pymysql_1734209850979/work
+python-dateutil==2.9.0.post0
+pytz==2025.2
+simplejson==3.20.1
+six==1.17.0
+sniffio @ file:///home/conda/feedstock_root/build_artifacts/sniffio_1733244044561/work
+SQLAlchemy @ file:///private/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_01cju3wjt6/croot/sqlalchemy_1736565049324/work
+typing_extensions @ file:///home/conda/feedstock_root/build_artifacts/bld/rattler-build_typing_extensions_1744302253/work
+tzlocal==5.3.1
+wcwidth==0.2.13
+Werkzeug @ file:///private/var/folders/k1/30mswbxs7r1g6zwn8y4fyt500000gp/T/abs_87am5fxnsf/croot/werkzeug_1737448721856/work
+WTForms @ file:///home/conda/feedstock_root/build_artifacts/wtforms_1733061487436/work
+zipp @ file:///home/conda/feedstock_root/build_artifacts/zipp_1732827521216/work
+
+flask~=3.1.0
+flask-migrate~=4.1.0
+flask-caching~=2.3.1
+werkzeug~=3.1.3
+wtforms~=3.2.1
+sqlalchemy~=2.0.37
+alembic~=1.15.2

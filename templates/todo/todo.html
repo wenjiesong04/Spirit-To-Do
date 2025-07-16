@@ -1,0 +1,287 @@
+{% extends "base.html" %}
+
+{% block title %}Spirit | TodoPage{% endblock %}
+
+{% block head %}
+    <link href="{{ url_for("static", filename = "css/todo/todo.css") }}" rel="stylesheet">
+    <script src="{{ url_for('static', filename = 'script/todo/todo.js') }}"></script>
+    <script src="{{ url_for('static', filename = 'script/home.js') }}"></script>
+{% endblock %}
+
+
+{% block body %}
+    <div class="container-fluid todo_page_content_base" id="todo_page_content_base">
+        <div class="todo_page_content_heading">
+            <div id="todo_nav">
+                <ul class="align-items-center heading_nav">
+                    <li class="nav_option">
+                        <button type="button" class="todo_content_button active" data-tab="todo-list">Todo List</button>
+                    </li>
+                    <li class="nav_option">
+                        <button type="button" class="todo_content_button" data-tab="heat-map">Heat Map</button>
+                    </li>
+                    <li class="nav_option">
+                        <button type="button" class="todo_content_button" data-tab="dashboard">Dashboard</button>
+                    </li>
+                    <li class="nav_option">
+                        <button type="button" class="todo_content_button" data-tab="trash">Trash Box</button>
+                    </li>
+                </ul>
+                <hr>
+            </div>
+            <div class="todo_page_content_container">
+
+                {#    第一个    #}
+                <div class="tab-contents" id="tab-todo-list">
+                    <!-- Todo List 页面内容 -->
+                    {% for timerange, todos in grouped_todos.items() %}
+                        {% set current_group_index = loop.index %}
+                        <div class="mb-3 tab-content">
+                            <div class="d-flex justify-content-between align-items-center px-3 py-2">
+                                <div>
+                                    <button class="btn btn-link drop_down_button p-0 list_btn" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#group-{{ loop.index }}"
+                                            aria-expanded="true">
+                                        <b>{{ timerange }}</b>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16">
+                                            <path fill="currentColor" d="M4.646 6.646a.5.5 0 0 1 .708 0L8 9.293l2.646-2.647a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 0 1 0-.708z"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div class="d-flex align-items-center gap-2">
+                                    <!-- 筛选条件下拉菜单 -->
+                                    <div class="dropdown">
+                                        <button class="btn btn-outline-primary dropdown-toggle" type="button" id="filterMenuBtn-{{ loop.index }}" data-bs-toggle="dropdown">
+                                            Filter Type
+                                        </button>
+                                        <ul class="dropdown-menu dropdown_menu" aria-labelledby="filterMenuBtn-{{ loop.index }}">
+                                            {% for status in status_choices %}
+                                                <li>
+                                                    <a class="dropdown-item filter-option" data-filter-type="status"
+                                                       data-filter="{{ status.value }}"
+                                                       data-group-index="{{ current_group_index }}">
+                                                        <span class="badge bg-{{ status.color }}">{{ status.label }}</span>
+                                                    </a>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                    <!-- 排序方式下拉 -->
+                                    <div class="dropdown">
+                                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="sortMenuBtn-{{ loop.index }}" data-bs-toggle="dropdown">
+                                            Sort
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="sortMenuBtn-{{ loop.index }}">
+                                            <li><a class="dropdown-item sort-option" data-sort="deadline" style="color: #e0d7f4" data-group-index="{{ loop.index }}">Deadline</a></li>
+                                            <li><a class="dropdown-item sort-option" data-sort="start_time" style="color: #e0d7f4" data-group-index="{{ loop.index }}">Start Time</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div id="group-{{ loop.index }}" class="collapse show" style="max-height: 30vh; overflow: scroll">
+                                <ul class="list-group list-group-flush todo_list_length">
+                                    {% for todo in todos %}
+                                        {% if selected_status=='all' or todo.status==selected_status %}
+                                            <li class="d-flex justify-content-between align-items-center list_item{% if todo.status == 2 %} completed{% endif %}" data-todo-id="{{ todo.id }}" data-status="{{ todo.status }}" data-priority="{{ todo.priority }}" data-deadline="{{ todo.deadline.strftime('%Y-%m-%d') if todo.deadline }}" data-start_time="{{ todo.start_time.strftime('%Y-%m-%d') if todo.start_time }}" data-deadline-timestamp="{{ todo.deadline_timestamp }}" data-content="{{ todo.content|e }}">                                                <div class="todo_items">
+                                                    <span class="checkbox_container" style="display: inline-flex; align-items: center;">
+                                                        <input type="checkbox" class="todo-complete-checkbox" data-todo-id="{{ todo.id }}" data-priority="{{ todo.priority }}" data-status="{{ todo.status }}" data-title-id="todo-title-{{ todo.id }}" data-badge-id="status-badge-{{ todo.id }}" {% if todo.status == 2 %}checked{% endif %} style="accent-color: #047e9b; width: 22px; height: 22px; border-radius: 50%; margin-right: 8px; cursor: pointer;" title="Mark as completed">
+                                                    </span>
+                                                    <span class="todo-title {% if todo.status == 2 %}text-muted text-decoration-line-through{% endif %}" id="todo-title-{{ todo.id }}">
+                                                        {{ todo.title }}
+                                                    </span>
+                                                </div>
+                                                {% if todo.status == 2 %}
+                                                    <span class="badge status-badge bg-primary text-light" id="status-badge-{{ todo.id }}">Completed</span>
+                                                {% elif todo.status == 3 %}
+                                                    <span class="badge status-badge bg-secondary text-light" id="status-badge-{{ todo.id }}">Overdue</span>
+                                                {% elif todo.priority == 3 %}
+                                                    <span class="badge status-badge bg-danger" id="status-badge-{{ todo.id }}">Urgent</span>
+                                                {% elif todo.priority == 2 %}
+                                                    <span class="badge status-badge bg-warning text-dark" id="status-badge-{{ todo.id }}">Important</span>
+                                                {% elif todo.priority == 1 %}
+                                                    <span class="badge status-badge bg-success" id="status-badge-{{ todo.id }}">Time-sensitive</span>
+                                                {% elif todo.priority == 0 %}
+                                                    <span class="badge status-badge bg-info text-dark" id="status-badge-{{ todo.id }}">Non-urgent</span>
+                                                {% endif %}
+                                                    <div class="todo_items" style="min-width: 40vh; align-items: center;">
+                                                        <div>
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-stopwatch" viewBox="0 0 16 16">
+                                                                <path d="M6.5 0a.5.5 0 0 1 .5.5V1h2V.5a.5.5 0 0 1 1 0V1h.5A2.5 2.5 0 0 1 13 3.5v.54A6.972 6.972 0 0 1 8 2a6.972 6.972 0 0 1-5 2.04V3.5A2.5 2.5 0 0 1 5.5 1H6V.5a.5.5 0 0 1 .5-.5zM8 4a5 5 0 1 1-4.546 2.914.5.5 0 1 1 .912-.408A4 4 0 1 0 8 5a.5.5 0 0 1 0 1z"></path>
+                                                            </svg>
+                                                            <span class="countdown"></span>
+                                                        </div>
+                                                        <div>
+                                                            <button class="btn btn-sm btn-primary edit-todo-btn" data-todo-id="{{ todo.id }}">
+                                                                Edit
+                                                            </button>
+                                                            <button class="btn btn-sm btn-danger delete-todo-btn" data-todo-id="{{ todo.id }}">
+                                                                Delete
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                            </li>
+                                        {% endif %}
+                                    {% else %}
+                                        <li class=" list_item">There are no tasks yet.</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                {#    第二个    #}
+                <div class="tab-contents" id="tab-heat-map" style="display:none;">
+                    <!-- Heat Map 页面内容 -->
+                    <div class="container-fluid heat_map_container justify-content-center" id="heat_map_container">
+                         <div class="heat_map">
+                            <iframe src="/static/echarts/heat_map.html"
+                                width="100%"
+                                height="650"
+                                frameborder="no">
+                            </iframe>
+                        </div>
+                    </div>
+                </div>
+
+                {#    第三个    #}
+                <div class="tab-contents" id="tab-dashboard" style="display:none;">
+                    <!-- Dashboard 页面内容 -->
+                    <div class="container-fluid justify-content-center dashboard" id="dashboard">
+                        <div class="row mt-2">
+
+                            <div class="col-md-12" style="margin: 1vh 1.5vh;">
+                                <div class="bar_chart" style="overflow: scroll;">
+                                    <iframe src="/static/echarts/bar_chart.html" width="94%" height="300" frameborder="no"></iframe>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 mt-3" style="padding: 1vh 1.5vh;">
+                                <div class="row text-center pie_radius">
+                                    <iframe src="/static/echarts/pie_radius.html" style="width: 80vh; height: 54.3vh" scrolling="no" frameborder="no"></iframe>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 mt-3" style="padding: 1vh 10vh;">
+                                <div class="row text-center mt-3 digital_panels">
+                                    <div class="d-flex justify-content-between align-items-center" style="margin-bottom: 1vh;">
+                                        <b>Task Statistics</b>
+                                        <div class="dropdown filter_dropdown">
+                                            <button type="button" class="filter_button dropdown-toggle" id="dashboardFilterBtn" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                                                    <path fill-rule="evenodd" d="M3.792 2.938A49.069 49.069 0 0 1 12 2.25c2.797 0 5.54.236 8.209.688a1.857 1.857 0 0 1 1.541 1.836v1.044a3 3 0 0 1-.879 2.121l-6.182 6.182a1.5 1.5 0 0 0-.439 1.061v2.927a3 3 0 0 1-1.658 2.684l-1.757.878A.75.75 0 0 1 9.75 21v-5.818a1.5 1.5 0 0 0-.44-1.06L3.13 7.938a3 3 0 0 1-.879-2.121V4.774c0-.897.64-1.683 1.542-1.836Z" clip-rule="evenodd"></path>
+                                                </svg>
+                                            </button>
+                                            <ul class="dropdown-menu dropdown_menu" aria-labelledby="dashboardFilterBtn" style="max-height: 10rem; overflow-y: auto;">
+                                                <li><a class="dropdown-item dashboard-filter-option" data-filter="01">January</a></li>
+                                                <li><a class="dropdown-item dashboard-filter-option" data-filter="02">February</a></li>
+                                                <li><a class="dropdown-item dashboard-filter-option" data-filter="03">March</a></li>
+                                                <li><a class="dropdown-item dashboard-filter-option" data-filter="04">April</a></li>
+                                                <li><a class="dropdown-item dashboard-filter-option" data-filter="05">May</a></li>
+                                                <li><a class="dropdown-item dashboard-filter-option" data-filter="06">June</a></li>
+                                                <li><a class="dropdown-item dashboard-filter-option" data-filter="07">July</a></li>
+                                                <li><a class="dropdown-item dashboard-filter-option" data-filter="08">August</a></li>
+                                                <li><a class="dropdown-item dashboard-filter-option" data-filter="09">September</a></li>
+                                                <li><a class="dropdown-item dashboard-filter-option" data-filter="10">October</a></li>
+                                                <li><a class="dropdown-item dashboard-filter-option" data-filter="11">November</a></li>
+                                                <li><a class="dropdown-item dashboard-filter-option" data-filter="12">December</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="col-6 py-5 digital_count" style="border: 1px solid #e0d7f4; border-top: none; border-left: none;">
+                                        <div>Completed</div>
+                                        <div class="display-6 fw-bold" id="sent_todo">0</div>
+                                    </div>
+                                    <div class="col-6 py-5 digital_count" style="border: 1px solid #e0d7f4; border-top: none; border-right: none;">
+                                        <div>Unfinished</div>
+                                        <div class="display-6 fw-bold" id="unfinished_todo">0</div>
+                                    </div>
+                                    <div class="col-6 py-5 digital_count" style="border: 1px solid #e0d7f4; border-bottom: none; border-left: none;">
+                                        <div>Overdue</div>
+                                        <div class="display-6 fw-bold" id="overdue_todo">0</div>
+                                    </div>
+                                    <div class="col-6 py-5 digital_count" style="border: 1px solid #e0d7f4; border-bottom: none; border-right: none;">
+                                        <div>All</div>
+                                        <div class="display-6 fw-bold" id="total_todo">0</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mt-3">
+                            <div class="col mb-5">
+                                <iframe src="/static/echarts/line_chart.html" width="95.3%" height="300" scrolling="no" frameborder="no"></iframe>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                {#    第四个    #}
+                <div class="tab-contents" id="tab-trash" style="display:none;">
+                    <!-- Trash 页面内容 -->
+                    <div class="d-flex flex-column trash_list">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h2>Trash Box</h2>
+                            <button class="btn btn-outline-info btn-sm" onclick="loadTrashData()">Refresh</button>
+                        </div>
+                        <hr>
+                        <div>
+                            <ul class="list-group list-group-flush todo_list_length" id="trash_list">
+                                {% for todo in trash_todos %}
+                                    <li class="d-flex justify-content-between align-items-center list_item py-3 px-3" data-todo-id="{{ todo.id }}">
+                                        <div class="d-flex align-items-center gap-3">
+                                            <div class="d-flex flex-column">
+                                                <div class="fw-bold">{{ todo.title }}{% if todo.content %} : {{ todo.content }}{% endif %}</div>
+                                                <div class="text-muted small mt-1 d-flex align-items-center gap-2">
+                                                    <span>
+                                                        {{ todo.deadline.strftime('%-d %b') if todo.deadline else 'None' }}
+                                                    </span>
+                                                    <span>·</span>
+                                                    <span>
+                                                        {% if todo.priority == 3 %} Critical
+                                                        {% elif todo.priority == 2 %} Important
+                                                        {% elif todo.priority == 1 %} Default
+                                                        {% else %} None
+                                                        {% endif %}
+                                                    </span>
+                                                    <span>·</span>
+                                                    <span>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-stopwatch" viewBox="0 0 16 16">
+                                                            <path d="M6.5 0a.5.5 0 0 1 .5.5V1h2V.5a.5.5 0 0 1 1 0V1h.5A2.5 2.5 0 0 1 13 3.5v.54A6.972 6.972 0 0 1 8 2a6.972 6.972 0 0 1-5 2.04V3.5A2.5 2.5 0 0 1 5.5 1H6V.5a.5.5 0 0 1 .5-.5zM8 4a5 5 0 1 1-4.546 2.914.5.5 0 1 1 .912-.408A4 4 0 1 0 8 5a.5.5 0 0 1 0 1z"></path>
+                                                        </svg>
+                                                        <span style="color: red;">Time Out</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <button class="btn btn-sm btn-danger delete-btn" data-id="{{ todo.id }}" data-bs-toggle="tooltip" title="Delete completely!">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                                                    <path fill-rule="evenodd" d="M5.47 5.47a.75.75 0 0 1 1.06 0L12 10.94l5.47-5.47a.75.75 0 1 1 1.06 1.06L13.06 12l5.47 5.47a.75.75 0 1 1-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 0 1-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd"></path>
+                                                </svg>
+                                            </button>
+                                            <button class="btn btn-sm btn-secondary restore-btn" data-id="{{ todo.id }}" data-bs-toggle="tooltip" title="Recover">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                                                    <path fill-rule="evenodd" d="M4.755 10.059a7.5 7.5 0 0 1 12.548-3.364l1.903 1.903h-3.183a.75.75 0 1 0 0 1.5h4.992a.75.75 0 0 0 .75-.75V4.356a.75.75 0 0 0-1.5 0v3.18l-1.9-1.9A9 9 0 0 0 3.306 9.67a.75.75 0 1 0 1.45.388Zm15.408 3.352a.75.75 0 0 0-.919.53 7.5 7.5 0 0 1-12.548 3.364l-1.902-1.903h3.183a.75.75 0 0 0 0-1.5H2.984a.75.75 0 0 0-.75.75v4.992a.75.75 0 0 0 1.5 0v-3.18l1.9 1.9a9 9 0 0 0 15.059-4.035.75.75 0 0 0-.53-.918Z" clip-rule="evenodd"></path>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </li>
+                                {% else %}
+                                    <li class="list-group-item text-center text-muted">回收站暂无任务，可点击上方按钮刷新。</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Todo Modal -->
+
+{% endblock %}
