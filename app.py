@@ -10,12 +10,13 @@ from blueprints.todo_content import bp as todo_content_bp
 from blueprints.in_box import bp as inbox_bp
 from flask_migrate import Migrate
 from flask_apscheduler import APScheduler
+import os
 
 
 app = Flask(__name__)
 # 绑定配置
 app.config.from_object(config)
-app.secret_key = 'your_secret_key_here' # 请替换为一个安全、唯一的字符串
+app.secret_key = os.getenv('SECRET_KEY', 'default-secret')
 app.config["SCHEDULER_API_ENABLED"] = True
 # 传入app.py
 db.init_app(app)
